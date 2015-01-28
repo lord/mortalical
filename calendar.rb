@@ -18,6 +18,7 @@ module Mortalical
 
     private
     def self.draw_year(pdf, year_num, x, y)
+      pdf.fill_color "333333"
       pdf.text_box year_num.to_s, at: [x, y+24], align: :left, size: 36, width: 70, height: 50, valign: :top
       pdf.text_box rand(1..100).to_s + "%", at: [x, y+4.75], align: :right, size: 10, width: 70, height: 50, valign: :top
       year = year_data(year_num)
@@ -25,8 +26,13 @@ module Mortalical
       week = 0
       pdf.line_width=0.5
       pdf.stroke_color "333333"
+      pdf.fill_color "d6d6d6"
       year[:months].each do |day_count|
         day_count.times do
+          if [0,6].include? dow
+            pdf.rectangle [x+dow*10, y-9-week*10], 10, 10
+            pdf.fill
+          end
           pdf.rectangle [x+dow*10, y-9-week*10], 10, 10
           pdf.stroke
           dow += 1
