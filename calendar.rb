@@ -11,13 +11,28 @@ module Mortalical
         pdf.font "LeagueGothic"
 
         9.times do |n|
-          draw_year(pdf, 1872+n, -15+85*n, 530)
+          draw_year(pdf, 1872+n, 0+83*n, 530, n==0)
         end
       end
     end
 
     private
-    def self.draw_year(pdf, year_num, x, y)
+    MONTH_LABELS = {
+      0 => "JAN",
+      1 => "FEB",
+      2 => "MAR",
+      3 => "APR",
+      4 => "MAY",
+      5 => "JUN",
+      6 => "JUL",
+      7 => "AUG",
+      8 => "SEP",
+      9 => "OCT",
+      10 => "NOV",
+      11 => "DEC",
+    }
+
+    def self.draw_year(pdf, year_num, x, y, draw_labels = false)
       pdf.fill_color "333333"
       pdf.text_box year_num.to_s, at: [x, y+24], align: :left, size: 36, width: 70, height: 50, valign: :top
       pdf.text_box rand(1..100).to_s + "%", at: [x, y+4.75], align: :right, size: 10, width: 70, height: 50, valign: :top
@@ -25,9 +40,13 @@ module Mortalical
       dow = year[:first_day]
       week = 0
       pdf.line_width=0.5
-      pdf.stroke_color "333333"
-      pdf.fill_color "d6d6d6"
-      year[:months].each do |day_count|
+      year[:months].each_with_index do |day_count, month_num|
+        if draw_labels == true
+          pdf.fill_color "333333"
+          pdf.text_box MONTH_LABELS[month_num], at: [x-55, y-9-week*10], align: :right, size: 10, width: 50, height: 50, valign: :top
+        end
+        pdf.stroke_color "333333"
+        pdf.fill_color "d6d6d6"
         day_count.times do
           if [0,6].include? dow
             pdf.rectangle [x+dow*10, y-9-week*10], 10, 10
