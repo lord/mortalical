@@ -61,6 +61,15 @@ module Mortalical
             week += 1
           end
         end
+        if month_num != 11
+          pdf.line_width=1.5
+          pdf.stroke do
+            pdf.move_to x, y-9-week*10-10
+            pdf.line_to x+dow*10, y-9-week*10-10
+            pdf.line_to x+dow*10, y-9-week*10
+            pdf.line_to x+7*10, y-9-week*10
+          end
+        end
       end
     end
 
