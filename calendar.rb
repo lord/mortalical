@@ -5,7 +5,7 @@ module Mortalical
     def self.generate
       Prawn::Document.generate("hello.pdf") do |pdf|
         pdf.font_families.update("LeagueGothic" => {
-          normal: "#{File.dirname(__FILE__)}/LeagueGothic-Regular.ttf"
+          normal: "./LeagueGothic-Regular.ttf"
         })
         pdf.font "LeagueGothic"
         pdf.text "Hello World!"
