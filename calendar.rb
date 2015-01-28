@@ -66,8 +66,8 @@ module Mortalical
             else
               pdf.move_to x, yday-10
               pdf.line_to x+dow*10, yday-10
+              pdf.line_to x+dow*10, yday
             end
-            pdf.line_to x+dow*10, yday
             pdf.line_to x+7*10, yday
           end
         end
