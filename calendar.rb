@@ -10,28 +10,33 @@ module Mortalical
         })
         pdf.font "LeagueGothic"
 
-        pdf.font_size 36
-        pdf.draw_text "1995", at: [29, 522]
-        year = year_data(1995)
-        dow = year[:first_day]
-        week = 0
-        pdf.line_width=0.5
-        pdf.stroke_color "333333"
-        year[:months].each do |day_count|
-          day_count.times do
-            pdf.rectangle [30+dow*10, 515-week*10], 10, 10
-            pdf.stroke
-            dow += 1
-            if dow == 7
-              dow = 0
-              week += 1
-            end
-          end
+        9.times do |n|
+          draw_year(pdf, 1872+n, -15+85*n, 525)
         end
       end
     end
 
     private
+    def self.draw_year(pdf, year_num, x, y)
+      pdf.font_size 36
+      pdf.draw_text year_num.to_s, at: [x-1, y]
+      year = year_data(year_num)
+      dow = year[:first_day]
+      week = 0
+      pdf.line_width=0.5
+      pdf.stroke_color "333333"
+      year[:months].each do |day_count|
+        day_count.times do
+          pdf.rectangle [x+dow*10, y-9-week*10], 10, 10
+          pdf.stroke
+          dow += 1
+          if dow == 7
+            dow = 0
+            week += 1
+          end
+        end
+      end
+    end
     def self.year_data(year)
       months = (1..12).map do |month|
         days_in_month(year, month)
