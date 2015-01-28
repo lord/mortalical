@@ -4,12 +4,30 @@ require 'date'
 module Mortalical
   module Calendar
     def self.generate
-      Prawn::Document.generate("hello.pdf") do |pdf|
+      Prawn::Document.generate("hello.pdf", page_layout: :landscape) do |pdf|
         pdf.font_families.update("LeagueGothic" => {
           normal: "./LeagueGothic-Regular.ttf"
         })
         pdf.font "LeagueGothic"
-        pdf.text year_data(2015).inspect
+
+        pdf.font_size 36
+        pdf.draw_text "1995", at: [29, 522]
+        year = year_data(1995)
+        dow = year[:first_day]
+        week = 0
+        pdf.line_width=0.5
+        pdf.stroke_color "333333"
+        year[:months].each do |day_count|
+          day_count.times do
+            pdf.rectangle [30+dow*10, 515-week*10], 10, 10
+            pdf.stroke
+            dow += 1
+            if dow == 7
+              dow = 0
+              week += 1
+            end
+          end
+        end
       end
     end
 
