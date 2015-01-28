@@ -39,14 +39,15 @@ module Mortalical
       year = year_data(year_num)
       dow = year[:first_day]
       week = 0
-      pdf.line_width=0.5
       year[:months].each_with_index do |day_count, month_num|
         if draw_labels == true
           pdf.fill_color "333333"
-          pdf.text_box MONTH_LABELS[month_num], at: [x-55, y-9-week*10], align: :right, size: 10, width: 50, height: 50, valign: :top
+          offset = if dow==0 then 0 else 10 end
+          pdf.text_box MONTH_LABELS[month_num], at: [x-55, y-9-week*10-offset], align: :right, size: 10, width: 50, height: 50, valign: :top
         end
         pdf.stroke_color "333333"
         pdf.fill_color "d6d6d6"
+        pdf.line_width=0.5
         day_count.times do
           if [0,6].include? dow
             pdf.rectangle [x+dow*10, y-9-week*10], 10, 10
