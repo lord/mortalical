@@ -18,8 +18,8 @@ module Mortalical
 
     private
     def self.draw_year(pdf, year_num, x, y)
-      pdf.font_size 36
-      pdf.draw_text year_num.to_s, at: [x-1, y]
+      pdf.text_box year_num.to_s, at: [x, y+24], align: :left, size: 36, width: 70, height: 50, valign: :top
+      pdf.text_box rand(1..100).to_s + "%", at: [x, y+4.75], align: :right, size: 10, width: 70, height: 50, valign: :top
       year = year_data(year_num)
       dow = year[:first_day]
       week = 0
@@ -37,6 +37,7 @@ module Mortalical
         end
       end
     end
+
     def self.year_data(year)
       months = (1..12).map do |month|
         days_in_month(year, month)
