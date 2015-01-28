@@ -11,7 +11,7 @@ module Mortalical
         pdf.font "LeagueGothic"
 
         9.times do |n|
-          draw_year(pdf, 1872+n, -15+85*n, 525)
+          draw_year(pdf, 1872+n, -15+85*n, 530)
         end
       end
     end
