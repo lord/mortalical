@@ -11,7 +11,7 @@ module Mortalical
         pdf.font "LeagueGothic"
 
         9.times do |n|
-          draw_year(pdf, 2015+n, 0+83*n, 530, n==0)
+          draw_year(pdf, 2015+n, -9+85*n, 530, n==0)
         end
       end
     end
@@ -43,7 +43,7 @@ module Mortalical
         if draw_labels == true && day == 1
           pdf.fill_color "000000"
           offset = if dow==0 then 0 else 10 end
-          pdf.text_box MONTH_LABELS[month], at: [x-55, yday-offset], align: :right, size: 10, width: 50, height: 50, valign: :top
+          pdf.text_box MONTH_LABELS[month], at: [x-53, yday-offset-1], align: :right, size: 10, width: 50, height: 50, valign: :top
         end
 
         pdf.stroke_color "000000"
