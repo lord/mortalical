@@ -34,19 +34,19 @@ module Mortalical
 
     def self.draw_year(pdf, year_num, x, y, draw_labels = false)
       # Draw text at top
-      pdf.fill_color "333333"
+      pdf.fill_color "000000"
       pdf.text_box year_num.to_s, at: [x, y+24], align: :left, size: 36, width: 70, height: 50, valign: :top
       pdf.text_box rand(1..100).to_s + "%", at: [x, y+4.75], align: :right, size: 10, width: 70, height: 50, valign: :top
 
       # Draw day grid
       for_each_day(year_num, x, y) do |month, day, dow, week, xday, yday|
         if draw_labels == true && day == 1
-          pdf.fill_color "333333"
+          pdf.fill_color "000000"
           offset = if dow==0 then 0 else 10 end
           pdf.text_box MONTH_LABELS[month], at: [x-55, yday-offset], align: :right, size: 10, width: 50, height: 50, valign: :top
         end
 
-        pdf.stroke_color "333333"
+        pdf.stroke_color "000000"
         pdf.fill_color "d6d6d6"
         pdf.line_width=0.5
 
