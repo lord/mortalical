@@ -3,7 +3,7 @@ require 'date'
 
 module Mortalical
   module Calendar
-    def self.generate(start_year, is_tabloid)
+    def self.generate(start_year, is_tabloid, fill_existing_days)
       settings = if is_tabloid
         { page_size:  [792, 1224] }
       else
@@ -15,12 +15,18 @@ module Mortalical
         })
         pdf.font "LeagueGothic"
 
+        fill_date = if fill_existing_days == true
+          Time.now.to_date
+        else
+          false
+        end
+
         if is_tabloid
           6.times do |n2|
             pdf.start_new_page if n2 > 0
             9.times do |n|
-              draw_year(pdf, start_year+n+18*n2, -9+85*n, 530+612, n==0)
-              draw_year(pdf, start_year+n+9+18*n2, -9+85*n, 530, n==0)
+              draw_year(pdf, start_year+n+18*n2, -9+85*n, 530+612, n==0, fill_date)
+              draw_year(pdf, start_year+n+9+18*n2, -9+85*n, 530, n==0, fill_date)
             end
             pdf.start_new_page
           end
@@ -28,7 +34,7 @@ module Mortalical
           12.times do |n2|
             pdf.start_new_page if n2 > 0
             9.times do |n|
-              draw_year(pdf, start_year+n+9*n2, -9+85*n, 530, n==0)
+              draw_year(pdf, start_year+n+9*n2, -9+85*n, 530, n==0, fill_date)
             end
           end
         end
@@ -51,7 +57,7 @@ module Mortalical
       11 => "DEC",
     }
 
-    def self.draw_year(pdf, year_num, x, y, draw_labels = false)
+    def self.draw_year(pdf, year_num, x, y, draw_labels = false, fill_date = false)
       # Draw text at top
       pdf.fill_color "000000"
       pdf.text_box year_num.to_s, at: [x, y+24], align: :left, size: 36, width: 70, height: 50, valign: :top
@@ -67,11 +73,21 @@ module Mortalical
 
         pdf.stroke_color "000000"
         pdf.fill_color "d6d6d6"
-        pdf.line_width=0.5
+        pdf.line_width=0.3
 
         if [0,6].include? dow
           pdf.rectangle [xday, yday], 10, 10
           pdf.fill
+        end
+
+        if fill_date && fill_date > Date.new(year_num, month+1, day)
+          padding = 3.5
+          pdf.stroke do
+            pdf.line [xday+10-padding, yday-padding], [xday+padding, yday-10+padding]
+          end
+          pdf.stroke do
+            pdf.line [xday+padding, yday-padding], [xday+10-padding, yday-10+padding]
+          end
         end
         pdf.rectangle [xday, yday], 10, 10
         pdf.stroke

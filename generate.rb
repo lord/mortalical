@@ -1,3 +1,3 @@
 require './calendar'
 
-Mortalical::Calendar.generate(1995, false)
+Mortalical::Calendar.generate(1995, false, true)
