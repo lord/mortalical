@@ -1,5 +1,6 @@
 require 'prawn'
 require 'date'
+require './life_table'
 
 module Mortalical
   module Calendar
@@ -27,8 +28,8 @@ module Mortalical
             pdf.start_new_page if n2 > 0
             9.times do |n|
               # be sure to ignore the year the title is drawn in
-              draw_year(pdf, start_year+n+18*n2-1, -9+85*n, 530+612, n==0, fill_date) unless n == 0 && n2 == 0
-              draw_year(pdf, start_year+n+9+18*n2-1, -9+85*n, 530, n==0, fill_date)
+              draw_year(pdf, start_year, start_year+n+18*n2-1, -9+85*n, 530+612, n==0, fill_date) unless n == 0 && n2 == 0
+              draw_year(pdf, start_year, start_year+n+9+18*n2-1, -9+85*n, 530, n==0, fill_date)
             end
           end
         else
@@ -63,11 +64,11 @@ module Mortalical
       pdf.text_box "M\nO\nR\nT\nA\nL\nI\nC\nA\nL", at: [x, y], align: :center, size: 52, width: 70, height: 520, valign: :center
     end
 
-    def self.draw_year(pdf, year_num, x, y, draw_labels = false, fill_date = false)
+    def self.draw_year(pdf, birth_year, year_num, x, y, draw_labels = false, fill_date = false)
       # Draw text at top
       pdf.fill_color "000000"
       pdf.text_box year_num.to_s, at: [x, y+24], align: :left, size: 36, width: 70, height: 50, valign: :top
-      pdf.text_box rand(1..100).to_s + "%", at: [x, y+4.75], align: :right, size: 10, width: 70, height: 50, valign: :top
+      pdf.text_box Mortalical.survival_percentage(birth_year, year_num), at: [x, y+4.75], align: :right, size: 10, width: 70, height: 50, valign: :top
 
       # Draw day grid
       for_each_day(year_num, x, y) do |month, day, dow, week, xday, yday|
