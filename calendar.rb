@@ -3,15 +3,34 @@ require 'date'
 
 module Mortalical
   module Calendar
-    def self.generate
-      Prawn::Document.generate("hello.pdf", page_layout: :landscape) do |pdf|
+    def self.generate(start_year, is_tabloid)
+      settings = if is_tabloid
+        { page_size:  [792, 1224] }
+      else
+        { page_layout: :landscape }
+      end
+      Prawn::Document.generate("hello.pdf", settings) do |pdf|
         pdf.font_families.update("LeagueGothic" => {
           normal: "./LeagueGothic-Regular.ttf"
         })
         pdf.font "LeagueGothic"
 
-        9.times do |n|
-          draw_year(pdf, 2015+n, -9+85*n, 530, n==0)
+        if is_tabloid
+          6.times do |n2|
+            pdf.start_new_page if n2 > 0
+            9.times do |n|
+              draw_year(pdf, start_year+n+18*n2, -9+85*n, 530+612, n==0)
+              draw_year(pdf, start_year+n+9+18*n2, -9+85*n, 530, n==0)
+            end
+            pdf.start_new_page
+          end
+        else
+          12.times do |n2|
+            pdf.start_new_page if n2 > 0
+            9.times do |n|
+              draw_year(pdf, start_year+n+9*n2, -9+85*n, 530, n==0)
+            end
+          end
         end
       end
     end
