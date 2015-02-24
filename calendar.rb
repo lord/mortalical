@@ -23,13 +23,13 @@ module Mortalical
         end
 
         if is_tabloid
-          draw_title(pdf, -9, 530+612-9)
+          draw_title(pdf, -9, 530+612-10-9)
           6.times do |n2|
             pdf.start_new_page if n2 > 0
             9.times do |n|
               # be sure to ignore the year the title is drawn in
-              draw_year(pdf, start_year, start_year+n+18*n2-1, -9+85*n, 530+612, n==0, fill_date) unless n == 0 && n2 == 0
-              draw_year(pdf, start_year, start_year+n+9+18*n2-1, -9+85*n, 530, n==0, fill_date)
+              draw_year(pdf, start_year, start_year+n+18*n2-1, -9+85*n, 530+612-10, n==0, fill_date) unless n == 0 && n2 == 0
+              draw_year(pdf, start_year, start_year+n+9+18*n2-1, -9+85*n, 530+10, n==0, fill_date)
             end
           end
         else
