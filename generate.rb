@@ -1,3 +1,3 @@
 require './calendar'
 
-Mortalical::Calendar.generate(1995, true, true)
+Mortalical::Calendar.generate(1995, !ARGV.include?("--letter"), !ARGV.include?("--nofill"))

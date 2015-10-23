@@ -10,7 +10,7 @@ module Mortalical
       else
         { page_layout: :landscape }
       end
-      Prawn::Document.generate("hello.pdf", settings) do |pdf|
+      Prawn::Document.generate("mortalical.pdf", settings) do |pdf|
         pdf.font_families.update("LeagueGothic" => {
           normal: "./LeagueGothic-Regular.ttf"
         })
@@ -37,7 +37,7 @@ module Mortalical
           12.times do |n2|
             pdf.start_new_page if n2 > 0
             9.times do |n|
-              draw_year(pdf, start_year+n+9*n2-1, -9+85*n, 530, n==0, fill_date) unless n == 0 && n2 == 0
+              draw_year(pdf, start_year, start_year+n+9*n2-1, -9+85*n, 530, n==0, fill_date) unless n == 0 && n2 == 0
             end
           end
         end
