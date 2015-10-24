@@ -1,6 +1,7 @@
 # mortalical
 
 ![Screenshot of mortalical](https://raw.githubusercontent.com/lord/img/master/screenshot-mortalical.png)
+<img src="https://raw.githubusercontent.com/lord/img/master/screenshot-mortalical.png" width="300">
 
 A calendar of your entire life
 
