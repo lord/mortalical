@@ -1,5 +1,7 @@
 # mortalical
 
+![Screenshot of mortalical](https://raw.githubusercontent.com/lord/img/master/screenshot-mortalical.png)
+
 A calendar of your entire life
 
 To install:
