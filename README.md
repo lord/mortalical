@@ -1,7 +1,6 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/lord/img/master/logo-mortalical.png" alt="Mortalical: Life-Long Wall Calendar" width="226">
   <br>
-  <img src="https://raw.githubusercontent.com/lord/img/master/screenshot-mortalical.png" width="300">
 </p>
 
 
